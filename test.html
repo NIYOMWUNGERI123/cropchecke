@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>USSD Test Form</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .form-group { margin-bottom: 15px; }
+        label { display: block; margin-bottom: 5px; }
+        input { padding: 5px; width: 200px; }
+        button { padding: 10px 20px; background: #4CAF50; color: white; border: none; cursor: pointer; }
+        #response { margin-top: 20px; padding: 10px; border: 1px solid #ddd; }
+    </style>
+</head>
+<body>
+    <h2>USSD Test Form</h2>
+    <form id="ussdForm">
+        <div class="form-group">
+            <label for="sessionId">Session ID:</label>
+            <input type="text" id="sessionId" name="sessionId" value="123456789">
+        </div>
+        <div class="form-group">
+            <label for="serviceCode">Service Code:</label>
+            <input type="text" id="serviceCode" name="serviceCode" value="*384*07887#">
+        </div>
+        <div class="form-group">
+            <label for="phoneNumber">Phone Number:</label>
+            <input type="text" id="phoneNumber" name="phoneNumber" value="+250790780353">
+        </div>
+        <div class="form-group">
+            <label for="text">USSD Text:</label>
+            <input type="text" id="text" name="text" value="">
+        </div>
+        <button type="submit">Send Request</button>
+    </form>
+    <div id="response"></div>
+
+    <script>
+        document.getElementById('ussdForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const formData = new FormData(e.target);
+            const response = await fetch('index.php', {
+                method: 'POST',
+                body: formData
+            });
+            const text = await response.text();
+            document.getElementById('response').innerText = text;
+        });
+    </script>
+</body>
+</html> 
